@@ -42,6 +42,7 @@ pipeline {
     stage('Deploy') {
       steps {
         junit '**/target/surefire-reports/TEST-*.xml'
+        input(message: 'For you, deployment doubly rhymes with unemployment, are you sure?', ok: 'Who needs a job anyway!')
         echo 'Deployment starting'
         bat 'mvn -B -DskipTests install'
         echo 'Deployment finished'
