@@ -4,8 +4,8 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Build starting'
-        echo 'Build finished'
         bat 'mvn -DskipTests clean package'
+        echo 'Build finished'
       }
     }
 
@@ -14,6 +14,7 @@ pipeline {
         stage('Unit') {
           steps {
             echo 'Unit tests starting'
+            bat 'mvn -Dtest="com.example.testingweb.smoke.**" test'
             echo 'Unit tests finished'
           }
         }
@@ -25,6 +26,20 @@ pipeline {
           }
         }
 
+        stage('Functional') {
+          steps {
+            echo 'Functional tests starting'
+            echo 'Functional tests finished'
+          }
+        }
+
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        echo 'Deployment starting'
+        echo 'Deployment finished'
       }
     }
 
