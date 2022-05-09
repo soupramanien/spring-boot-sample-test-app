@@ -42,6 +42,7 @@ pipeline {
 
     stage('Deploy') {
       steps {
+        input(message: 'Voulez-vous continuer ?', ok: 'Alons-y')
         echo 'déploiement va démarrer'
         sh 'mvn -DskipTests install'
         echo 'déploiement terminé'
