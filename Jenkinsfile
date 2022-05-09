@@ -3,9 +3,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        echo 'La construction va dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©marrer'
+        echo 'La construction va dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©marrer'
         sh 'mvn -DskipTests clean package'
-        echo 'la construction terminÃƒÆ’Ã‚Â©e'
+        echo 'la construction terminÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©e'
       }
     }
 
@@ -13,17 +13,18 @@ pipeline {
       parallel {
         stage('Unit') {
           steps {
-            echo 'Test unitaire va dÃƒÂ©marrer'
+            echo 'Test unitaire va dÃƒÆ’Ã‚Â©marrer'
             sh 'mvn -Dtest="com.example.testingweb.smoke.**" test'
-            echo 'test unitaire terminÃƒÂ©'
+            echo 'test unitaire terminÃƒÆ’Ã‚Â©'
+            junit '**/target/surefire-reports/TEST-*.xml'
           }
         }
 
         stage('Integration') {
           steps {
-            echo 'est d\'integration va dÃ©marrer'
+            echo 'est d\'integration va dÃƒÂ©marrer'
             sh 'mvn -Dtest="com.example.testingweb.integration.**" test'
-            echo 'test d\'integration terminÃ©'
+            echo 'test d\'integration terminÃƒÂ©'
           }
         }
 
@@ -31,7 +32,7 @@ pipeline {
           steps {
             echo 'test fonctionnel va demarrer'
             sh 'mvn -Dtest="com.example.testingweb.functional.**" test'
-            echo 'test fonctionnel terminé'
+            echo 'test fonctionnel terminÃ©'
           }
         }
 
@@ -40,9 +41,9 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        echo 'd�ploiement va d�marrer'
+        echo 'déploiement va démarrer'
         sh 'mvn -DskipTests install'
-        echo 'd�ploiement termin�'
+        echo 'déploiement terminé'
       }
     }
 
