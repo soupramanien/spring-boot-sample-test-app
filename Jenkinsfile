@@ -4,8 +4,6 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Build starting'
-        bat 'mvn -B -DskipTests clean package '
-        echo 'Build finished'
       }
     }
 
