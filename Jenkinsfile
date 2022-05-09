@@ -3,9 +3,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        echo 'La construction va dÃƒÂ©marrer'
+        echo 'La construction va dÃƒÆ’Ã‚Â©marrer'
         sh 'mvn -DskipTests clean package'
-        echo 'la construction terminÃ©e'
+        echo 'la construction terminÃƒÂ©e'
       }
     }
 
@@ -13,17 +13,25 @@ pipeline {
       parallel {
         stage('Unit') {
           steps {
-            echo 'Test unitaire va démarrer'
+            echo 'Test unitaire va dÃ©marrer'
             sh 'mvn -Dtest="com.example.testingweb.smoke.**" test'
-            echo 'test unitaire terminé'
+            echo 'test unitaire terminÃ©'
           }
         }
 
         stage('Integration') {
           steps {
-            echo 'est d\'integration va d�marrer'
+            echo 'est d\'integration va démarrer'
             sh 'mvn -Dtest="com.example.testingweb.integration.**" test'
-            echo 'test d\'integration termin�'
+            echo 'test d\'integration terminé'
+          }
+        }
+
+        stage('Functional') {
+          steps {
+            echo 'test fonctionnel va demarrer'
+            sh 'mvn -Dtest="com.example.testingweb.functional.**" test'
+            echo 'test fonctionnel termin�'
           }
         }
 
