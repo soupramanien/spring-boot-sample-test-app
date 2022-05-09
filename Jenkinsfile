@@ -56,6 +56,11 @@ pipeline {
     }
 
   }
+  post{
+    success{
+      mail to "eliott.mischler@grenoble-em.com" 
+    }
+  }
   tools {
     maven 'maven 3.8'
   }
