@@ -58,7 +58,7 @@ pipeline {
   }
   post{
     success{
-      mail to: "eliott.mischler@grenoble-em.com", subject: "${env.BUILD_ID} - ${env.JENKINS_URL}" 
+      mail to: "eliott.mischler@grenoble-em.com", subject: "${env.BUILD_ID} - ${currentBuild.result}", body: "${env.BUILD_ID} - ${env.JENKINS_URL}"  
     }
   }
   tools {
