@@ -9,6 +9,14 @@ pipeline {
       }
     }
 
+    stage('Test') {
+      steps {
+        echo 'Test unitaire va démarrer'
+        sh 'mvn -Dtest="com.example.testingweb.smoke.**" test'
+        echo 'test unitaire terminé'
+      }
+    }
+
   }
   tools {
     maven 'maven 3.8'
