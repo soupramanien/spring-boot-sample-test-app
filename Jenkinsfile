@@ -22,6 +22,7 @@ pipeline {
         stage('Integration') {
           steps {
             echo 'Integration tests starting'
+            bat 'mvn -Dtest="com.example.testingweb.integration.**" test'
             echo 'Integration tests finished'
           }
         }
@@ -29,6 +30,7 @@ pipeline {
         stage('Functional') {
           steps {
             echo 'Functional tests starting'
+            bat 'mvn -Dtest="com.example.testingweb.functional.**" test'
             echo 'Functional tests finished'
           }
         }
