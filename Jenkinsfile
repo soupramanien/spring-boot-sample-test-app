@@ -58,7 +58,7 @@ pipeline {
   }
   post{
     success{
-      mail to "eliott.mischler@grenoble-em.com" 
+      mail to: "eliott.mischler@grenoble-em.com" 
     }
   }
   tools {
