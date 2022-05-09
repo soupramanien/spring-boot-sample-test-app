@@ -40,6 +40,7 @@ pipeline {
 
     stage('Deploy') {
       steps {
+        junit '**/target/surefire-reports/TEST-*.xml'
         echo 'Deployment starting'
         bat 'mvn -B -DskipTests install'
         echo 'Deployment finished'
