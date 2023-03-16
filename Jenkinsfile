@@ -9,9 +9,9 @@ pipeline {
 
     stage('test') {
       parallel {
-        stage('test intégration') {
+        stage('test intÃ©gration') {
           steps {
-            echo 'test d\'intégration'
+            echo 'test d\'intÃ©gration'
           }
         }
 
@@ -36,5 +36,9 @@ pipeline {
       }
     }
 
+  }
+  tools {
+    maven 'maven 3.9'
+    jdk 'java 11'
   }
 }
