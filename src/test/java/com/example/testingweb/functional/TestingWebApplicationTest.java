@@ -21,8 +21,20 @@ public class TestingWebApplicationTest {
 	private MockMvc mockMvc;
 
 	@Test
-	public void shouldReturnDefaultMessage() throws Exception {
+	public void shouldReturnDefaultMessage_home() throws Exception {
 		this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
 				.andExpect(content().string(containsString("Hello, World")));
 	}
+	@Test
+	public void shouldReturnDefaultMessage_greeting() throws Exception {
+		this.mockMvc.perform(get("/greeting")).andDo(print()).andExpect(status().isOk())
+				.andExpect(content().string(containsString("greeting")));
+	}
+	
+	@Test
+	public void shouldReturnDefaultMessage_test() throws Exception {
+		this.mockMvc.perform(get("/test")).andDo(print()).andExpect(status().isOk())
+				.andExpect(content().string(containsString("test")));
+	}
+	
 }
