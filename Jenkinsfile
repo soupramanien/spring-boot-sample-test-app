@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        echo 'début de l\'étape Build'
+        echo 'dÃ©but de l\'Ã©tape Build'
         bat ' mvnw -DskipTests clean install'
         echo 'fin de Build'
       }
@@ -11,21 +11,27 @@ pipeline {
 
     stage('test') {
       parallel {
-        stage('test intÃ©gration') {
+        stage('test intÃƒÂ©gration') {
           steps {
-            echo 'test d\'intÃ©gration'
+            echo 'debut: test d\'intégration'
+            bat 'mvnw -Dtest=com.example.testingweb.integration.** test'
+            echo 'fin: test d\'intégration'
           }
         }
 
         stage('test fonctionnel') {
           steps {
-            echo 'test fonctionnel'
+            echo 'début: test fonctionnel'
+            bat 'mvnw -Dtest=com.example.testingweb.functional.** test'
+            echo 'fin: test fonctionnel'
           }
         }
 
         stage('smoke test') {
           steps {
-            echo 'smoke test'
+            echo 'début: smoke test'
+            bat 'mvnw -Dtest=com.example.testingweb.smoke.** test'
+            echo 'fin: smoke test'
           }
         }
 
