@@ -7,6 +7,7 @@ pipeline {
         sh 'mvn -DskipTests clean package'
         echo 'la construction terminÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©e'
         archiveArtifacts '**/target/*.jar'
+        sh 'docker build -t testapp:latest'
       }
     }
 
@@ -50,7 +51,7 @@ pipeline {
       steps {
         input(message: 'Voulez-vous continuer ?', ok: 'Alons-y')
         echo 'déploiement va démarrer'
-        sh 'java -jar target/testing-web-complete.jar &'
+        sh 'docker run -d -p 3030:9090 testapp:latest'
         echo 'déploiement terminé'
       }
     }
