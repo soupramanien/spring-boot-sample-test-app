@@ -7,7 +7,7 @@ pipeline {
         sh 'mvn -DskipTests clean package'
         echo 'la construction terminÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©e'
         archiveArtifacts '**/target/*.jar'
-        sh 'docker build -t testapp:latest'
+        sh 'docker build -t testapp:latest -v $(which docker):/usr/local/bin/docker'
       }
     }
 
@@ -51,7 +51,7 @@ pipeline {
       steps {
         input(message: 'Voulez-vous continuer ?', ok: 'Alons-y')
         echo 'déploiement va démarrer'
-        sh 'docker run -d -p 3030:9090 testapp:latest'
+        sh 'docker run -d -p 3030:9090 testapp:latest -v $(which docker):/usr/local/bin/docker'
         echo 'déploiement terminé'
       }
     }
