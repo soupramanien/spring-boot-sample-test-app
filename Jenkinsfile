@@ -61,7 +61,7 @@ pipeline {
   }
   post {
     success {
-      emailext(to: 'eliott.mischler@grenoble-em.com', subject: "${env.BUILD_ID} - ${currentBuild.result}", body: "${env.BUILD_ID} - ${env.JENKINS_URL}")
+      emailext(to: 'soupramanien@baobab-ingenierie.fr', subject: "${env.BUILD_ID} - ${currentBuild.result}", body: "${env.BUILD_ID} - ${env.JENKINS_URL}")
     }
 
   }
