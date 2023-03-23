@@ -1,53 +1,68 @@
 pipeline {
   agent any
   stages {
-    stage('build') {
+    stage('Build') {
       steps {
-        echo 'dÃ©but de l\'Ã©tape Build'
-        bat ' mvnw -DskipTests clean install'
-        echo 'fin de Build'
+        echo 'La construction va dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©marrer'
+        sh 'mvn -DskipTests clean package'
+        echo 'la construction terminÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©e'
+        archiveArtifacts '**/target/*.jar'
       }
     }
 
-    stage('test') {
+    stage('Test') {
       parallel {
-        stage('test intÃƒÂ©gration') {
+        stage('Unit') {
           steps {
-            echo 'debut: test d\'intégration'
-            bat 'mvnw -Dtest=com.example.testingweb.integration.** test'
-            echo 'fin: test d\'intégration'
+            echo 'Test unitaire va dÃƒÆ’Ã‚Â©marrer'
+            sh 'mvn -Dtest="com.example.testingweb.smoke.**" test'
+            echo 'test unitaire terminÃƒÆ’Ã‚Â©'
+            junit '**/target/surefire-reports/TEST-*.xml'
           }
         }
 
-        stage('test fonctionnel') {
+        stage('Integration') {
           steps {
-            echo 'début: test fonctionnel'
-            bat 'mvnw -Dtest=com.example.testingweb.functional.** test'
-            echo 'fin: test fonctionnel'
+            echo 'est d\'integration va dÃƒÂ©marrer'
+            sh 'mvn -Dtest="com.example.testingweb.integration.**" test'
+            echo 'test d\'integration terminÃƒÂ©'
           }
         }
 
-        stage('smoke test') {
+        stage('Functional') {
           steps {
-            echo 'début: smoke test'
-            bat 'mvnw -Dtest=com.example.testingweb.smoke.** test'
-            echo 'fin: smoke test'
+            echo 'test fonctionnel va demarrer'
+            sh 'mvn -Dtest="com.example.testingweb.functional.**" test'
+            echo 'test fonctionnel terminÃ©'
           }
         }
 
       }
     }
 
-    stage('deploy') {
+    stage('Deploy') {
+      when {
+        expression {
+          currentBuild.result == null || currentBuild.result == 'SUCCESS'
+        }
+
+      }
       steps {
-        echo 'stage deploy'
-        bat 'java -jar target/testing-web-complete.jar'
+        input(message: 'Voulez-vous continuer ?', ok: 'Alons-y')
+        echo 'déploiement va démarrer'
+        sh 'java -jar target/testing-web-complete.jar &'
+        echo 'déploiement terminé'
       }
     }
 
   }
   tools {
-    maven 'maven 3.9'
-    jdk 'java 11'
+    maven 'maven 3.8'
+  }
+  post {
+    success {
+      emailext(to: 'soupramanien@baobab-ingenierie.fr', subject: "${env.BUILD_ID} - ${currentBuild.result}", body: "${env.BUILD_ID} - ${env.JENKINS_URL}")
+    }
+
   }
 }
