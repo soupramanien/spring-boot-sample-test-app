@@ -42,26 +42,27 @@ pipeline {
 
     stage('Deploy') {
       when {
-	      expression {
-	        currentBuild.result == null || currentBuild.result == 'SUCCESS'
-	      }
-      }
+        expression {
+          currentBuild.result == null || currentBuild.result == 'SUCCESS'
+        }
 
+      }
       steps {
         input(message: 'Voulez-vous continuer ?', ok: 'Alons-y')
         echo 'déploiement va démarrer'
-        sh 'mvn -DskipTests install'
+        sh 'java -jar target/testing-web-complete.jar &'
         echo 'déploiement terminé'
       }
     }
 
   }
-  post{
-    success{
-      emailext to: "eliott.mischler@grenoble-em.com", subject: "${env.BUILD_ID} - ${currentBuild.result}", body: "${env.BUILD_ID} - ${env.JENKINS_URL}"  
-    }
-  }
   tools {
     maven 'maven 3.8'
+  }
+  post {
+    success {
+      emailext(to: 'eliott.mischler@grenoble-em.com', subject: "${env.BUILD_ID} - ${currentBuild.result}", body: "${env.BUILD_ID} - ${env.JENKINS_URL}")
+    }
+
   }
 }
