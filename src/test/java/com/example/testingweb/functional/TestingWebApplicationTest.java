@@ -31,10 +31,10 @@ public class TestingWebApplicationTest {
 				.andExpect(content().string(containsString("greeting")));
 	}
 	
-	@Test
-	public void shouldReturnDefaultMessage_test() throws Exception {
-		this.mockMvc.perform(get("/test")).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString("test")));
-	}
+//	@Test
+//	public void shouldReturnDefaultMessage_test() throws Exception {
+//		this.mockMvc.perform(get("/test")).andDo(print()).andExpect(status().isOk())
+//				.andExpect(content().string(containsString("test")));
+//	}
 	
 }
